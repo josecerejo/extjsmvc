@@ -1,7 +1,7 @@
 Ext.define('ExtMVC.view.ClientCard', {
 
   extend: 'Ext.container.Viewport',
-  requires: ['ExtMVC.view.clientcard.Toolbar'],
+  requires: ['ExtMVC.view.clientcard.Toolbar','ExtMVC.view.clientcard.ClientData','ExtMVC.view.clientcard.ClientTabs'],
   uses: [
   //  'ExtMVC.view.app.PortalPanel'
   ],
@@ -21,6 +21,12 @@ Ext.define('ExtMVC.view.ClientCard', {
       // },
       items: [{
         xtype :'ClientCardToolbar'
+      },
+      {
+        xtype :'ClientCardData'
+      },
+      {
+        xtype :'ClientCardTabs'
       }]
     });
     this.callParent(arguments);

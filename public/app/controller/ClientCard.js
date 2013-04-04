@@ -1,3 +1,5 @@
+Ext.ns('Core');
+
 Ext.define('ExtMVC.controller.ClientCard', {
   extend: 'Ext.app.Controller',
   //stores: ['SearchResultStore'],
@@ -14,18 +16,23 @@ Ext.define('ExtMVC.controller.ClientCard', {
   init: function() {
     console.log('init ClientCard controller');
 
+    var pageUuid = this.getQueryParam('pageUuid');
+ console.log(pageUuid);
+
     this.control({
       'toolbar': {
-        openSubscribers: this.openSubscribersWindow
-      }
-    /*  'toolbar':{
-        openConversation: this.openConversationWindow
-      },
-      'toolbar':{
+        openSubscribers: this.openSubscribersWindow,
+        openConversation: this.openConversationWindow,
         openUpsales: this.openUpsalesWindow
-      }*/
+      }
     });
   },
+
+
+getQueryParam: function (name){
+		   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+		      return decodeURIComponent(name[1]);
+ },
 
 
   //functions
@@ -49,7 +56,7 @@ Ext.define('ExtMVC.controller.ClientCard', {
 	                         contentType: 'html',
 	                         scripts: true,
 	                         autoLoad: true,
-	                         params: {pageUuid: encodeURIComponent(pageUuid)}
+	                         params: {pageUuid: encodeURIComponent(this.pageUuid)}
 		                     }
 				             });
 					      // }
