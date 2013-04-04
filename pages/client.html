@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+	<title>UMB</title>
+
+	<!-- Ext JS Files -->
+    <link rel="stylesheet" href="../resources/css/ext-all.css"/>
+    <script src="../resources/js/ext-all.js"></script>
+
+    <!-- App Files -->
+    <script type="text/javascript" src="../action/api.js"></script>
+    <script type="text/javascript" src="../public/app.js"></script>
+<style type="text/css">
+      td.subscriberCell, td.subscriberCell * .x-panel-body { background: #EAEAFF; }
+      .header-field-name { font-weight: bold; }
+      .header-field-value { }
+      .balanceGrid * { background: transparent !important; line-height: 10px !important; padding: 1px 1px 1px 1px !important;}
+    </style>
+    <style type="text/css">
+      /* инлайн стиль в субтабе не подгружается в MSIE, поэтому вынесено из субтабы услуг наверх */
+    	.service-button-active   { display: inline; margin-left: 10px; opacity: 1.0; filter: alpha(opacity=100); }
+    	.service-button-disabled { display: inline; margin-left: 10px; opacity: 0.3; filter: alpha(opacity=30); }
+    	.service-button-hidden   { display: none; }
+    </style>
+</head>
+<body>
+	<span id="app-msg" style="display:none;"></span>
+</body>
+</html>
