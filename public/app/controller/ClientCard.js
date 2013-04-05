@@ -1,9 +1,8 @@
-Ext.ns('Core');
-
 Ext.define('ExtMVC.controller.ClientCard', {
   extend: 'Ext.app.Controller',
   //stores: ['SearchResultStore'],
   //models: ['Stock', 'ChartStock'],
+  //requires:['app.util.Common'],
   views: ['clientcard.Toolbar'],
 
   refs: [

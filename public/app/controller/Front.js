@@ -15,6 +15,8 @@ Ext.define('ExtMVC.controller.Front', {
   init: function() {
     console.log('init Front controller');
 
+    console.log(ExtMVC.util.Common.getText());
+
     this.control({
       'form': {
         search: this.doFormSearch

@@ -15,7 +15,8 @@ Ext.application({
   'Ext.Msg',
   'Ext.direct.*',
   'Ext.data.*',
-  'Ext.grid.*'
+  'Ext.grid.*',
+  'ExtMVC.util.Common'
   ],
 
   //automatically load and instantiate AppName.view.Viewport before firing the launch function.
