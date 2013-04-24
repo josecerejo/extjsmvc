@@ -20,6 +20,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
 
       items: [{
         fieldLabel: 'MSISDN (10 цифр)',
+        id: 'msisdn',
         name: 'msisdn',
         allowBlank:false,
         value: '1111111111',
@@ -27,6 +28,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
         minLength: 10
       },{
         fieldLabel: 'Номер документа',
+        id: 'idCard',
         name: 'idCard',
         allowBlank:false,
         value: '111111',
@@ -36,7 +38,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
       ],
 
       buttons: [
-        {
+    /*    {
   text:'run',
     id: 'runButton',
   handler:function(){
@@ -51,7 +53,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
      el.action = form.url;
      el.submit();
   }},
-
+*/
         {
         text: 'Искать',
         name: 'button-search',
@@ -73,7 +75,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
       },{
         text: 'Отмена',
         handler: function(){
-          resultsStore.loadData([],false);
+          component.fireEvent('cancel');
         }
       }]
     });

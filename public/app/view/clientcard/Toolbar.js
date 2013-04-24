@@ -1,24 +1,12 @@
 Ext.define('ExtMVC.view.clientcard.Toolbar', {
   extend: 'Ext.toolbar.Toolbar',
-  alias: 'widget.ClientCardToolbar',
+  alias: 'widget.client-toolbar',
 
   initComponent: function() {
 
     var component = this;
-   //console.log(tb);
-    /*
-    tb.items.add({
-              xtype:   'button',
-              text:    '2222222',
-              tooltip: 'Указать данную организацию как оператора системы ЭДО без счёта'
-              //handler: grid.setAsOperatorWithoutAccount.createDelegate(grid)
-            });
 
-*/
-           // tb.suspendLayout = false;
-	          //   tb.doLayout();
-   //component.resumeLayouts(true);
-      Ext.apply(this, {
+   Ext.apply(this, {
         items:[
           {
 	                 text:'Абоненты',

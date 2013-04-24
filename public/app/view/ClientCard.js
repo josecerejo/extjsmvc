@@ -1,17 +1,15 @@
 Ext.define('ExtMVC.view.ClientCard', {
 
   extend: 'Ext.container.Viewport',
-  requires: ['ExtMVC.view.clientcard.Toolbar','ExtMVC.view.clientcard.ClientData','ExtMVC.view.clientcard.ClientTabs'],
+  requires: [
+    'ExtMVC.view.app.Toolbar',
+    'ExtMVC.view.clientcard.ClientData',
+    'ExtMVC.view.clientcard.ClientTabs'],
   uses: [
   //  'ExtMVC.view.app.PortalPanel'
   ],
 
   initComponent: function(){
-    //console.log('initvieport ClientCard');
-
-    //Ext.require([
-    //  'Ext.FormPanel'
-    //  ]);
 
     Ext.apply(this, {
       id: 'app-clientcard',

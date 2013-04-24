@@ -77,6 +77,11 @@ Ext.define('ExtMVC.view.clientcard.ClientData', {
 	               }]
 		           });
 
+
+
+
+
     this.callParent(arguments);
   }
+
 });

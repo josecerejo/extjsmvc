@@ -29,13 +29,13 @@ Ext.define('ExtMVC.view.app.SearchResult', {
     var component = this;
     component.store = Ext.data.StoreManager.lookup('SearchResultStore');
 
-
     Ext.apply(this,  {
       listeners: {
         selectionchange: function(selmodel, selected, eOpts) {
 
           if (selected && selected.length) {
-            component.fireEvent('openclient', selected[0]);
+            var uuid = selected[0].get('uuid');
+            component.fireEvent('openclient', uuid);
           }
           return true;
         }

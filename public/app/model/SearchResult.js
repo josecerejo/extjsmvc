@@ -5,7 +5,7 @@ Ext.define('ExtMVC.model.SearchResult', {
     name: 'uuid'
   },
   {
-    name: 'clientId', 
+    name: 'clientId',
     mapping: 'searchResult.id.localId'
   },
   {
