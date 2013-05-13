@@ -1,13 +1,14 @@
 //TODO: сделать автом генерацию store по модели чтобы не плодить много store а создавать их на лету
 //TODO: убрать обяявления store из контроллеров а то они выполняются на всех станицах
 
+Ext.ns('ExtMVC');
 Ext.ns('Core');
 
 Core.startApplication = function() {
 Ext.Loader.setConfig({
   enabled: true
 });
-
+Ext.Loader.setPath('Ext', '../resources/js');
 Ext.Loader.setPath('Ext.ux', '../resources/js/ux');
 Ext.require([
    'Ext.ux.tab.VerticalBar',

@@ -1,4 +1,4 @@
-Ext.define('Umb.data.BalancesStore', {
+Ext.define('ExtMVC.store.BalancesStore', {
   extend: 'Ext.data.ArrayStore',
   storeId: 'BalancesStore',
     fields: [

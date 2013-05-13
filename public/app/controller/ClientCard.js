@@ -1,12 +1,12 @@
 Ext.define('ExtMVC.controller.ClientCard', {
   extend: 'Ext.app.Controller',
-  stores: ['ClientInfoStore','ClientBalancesStore'],
+  stores: ['ClientInfoStore'],
   //models: ['Stock', 'ChartStock'],
   views: [
   'clientcard.Toolbar',
   'clientcard.ClientData',
   'clientcard.win.Subscribers','clientcard.win.Conversation'
-   ],
+  ],
 
   refs: [
   {
@@ -21,7 +21,7 @@ Ext.define('ExtMVC.controller.ClientCard', {
     ref: 'winSubscribers',
     selector: 'win.Subscribers'
   },
-    {
+  {
     ref: 'winConversation',
     selector: 'win.Conversation'
   }
@@ -70,14 +70,13 @@ Ext.define('ExtMVC.controller.ClientCard', {
     );
 
 
-
-      var Store = Ext.data.StoreManager.lookup('ClientBalancesStore');
-      Store.load({
+    var Store = ExtMVC.model.ClientInfo.getClientBalancesStore();
+    Store.load({
       'params':getQueryParam('pageUuid'),
       callback: function(records, operation, success) {
         var client = records[0].raw;
 
-       console.log(client);
+        console.log(client);
       }
     }
     );
@@ -89,8 +88,8 @@ Ext.define('ExtMVC.controller.ClientCard', {
     //console.log(params);
     //console.log(this.getQueryParam('pageUuid'));
     //this.getWinSubscribers.show();
-   // var pageUuid = getQueryParam('pageUuid');
-/*
+    // var pageUuid = getQueryParam('pageUuid');
+    /*
     var win = Ext.create('widget.window', {
       title: 'Список абонентов клиента',
       closable: true,
@@ -110,7 +109,7 @@ Ext.define('ExtMVC.controller.ClientCard', {
     });
     win.show();
 */
-     var win = Ext.create('widget.win-subscribers');
+    var win = Ext.create('widget.win-subscribers');
     win.x = params.x;
     win.y = params.y;
     //win.loader.params.pageUuid = encodeURIComponent(pageUuid);
