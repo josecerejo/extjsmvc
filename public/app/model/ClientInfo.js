@@ -13,6 +13,15 @@ Ext.define('ExtMVC.model.ClientInfo', {
       });
 
      return getStore('model_stores.'+this.modelName, config);
+    },
+
+    getClientStore: function() {
+      var config = getStoreConfig(this.modelName, 'clientCardApi.getClient', {
+        autoLoad: false
+      });
+
+     return getStore('model_stores.'+this.modelName, config);
     }
+
   }
 });

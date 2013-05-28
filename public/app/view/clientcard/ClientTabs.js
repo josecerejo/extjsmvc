@@ -1,5 +1,6 @@
 Ext.define('ExtMVC.view.clientcard.ClientTabs', {
   extend: 'Ext.tab.Panel',
+  uses:['Ext.ux.tab.VerticalBar'],
   alias: 'widget.client-tabs',
   activeTab: 0,
   width:'100%',

@@ -1,6 +1,7 @@
 Ext.define('ExtMVC.view.clientcard.win.Subscribers', {
   extend: 'Ext.window.Window',
   uses: ['ExtMVC.util.Client'],
+  id : 'widget.win-subscribers',
   alias : 'widget.win-subscribers',
   title : 'Список абонентов клиента',
   layout: 'fit',

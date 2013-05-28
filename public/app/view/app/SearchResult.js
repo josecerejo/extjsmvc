@@ -1,6 +1,7 @@
 Ext.define('ExtMVC.view.app.SearchResult', {
   extend: 'Ext.grid.Panel',
   alias: 'widget.SearchResult',
+  requires: ['ExtMVC.model.SearchResult','ExtMVC.model.LastSearchResult'],
   title: 'Результаты поиска',
   width: 350,
   height: 300,
@@ -27,7 +28,7 @@ Ext.define('ExtMVC.view.app.SearchResult', {
 
   initComponent: function() {
     var component = this;
-    component.store = Ext.data.StoreManager.lookup('SearchResultStore');
+    this.store = ExtMVC.model.LastSearchResult.getStore(); //Ext.data.StoreManager.lookup('SearchResultStore');
 
     Ext.apply(this,  {
       listeners: {

@@ -63,19 +63,31 @@ Ext.define('ExtMVC.view.app.win.Search', {
       listeners: {
           afterrender: function() {
              var grid = this.down('grid'); //Ext.getCmp('widget.SearchResult');
-            //_d(grid.store.totalCount);
-          
-            if (grid.store.totalCount>0){
-              this.down('grid').width =500;
-              this.width = 800;
-            }
-            else {
-               this.down('grid').width =0;
-               this.width = 310;
-            }
+            _d('win afterrender');
 
-          }
+
+           grid.store.load({
+            scope   : this,
+            callback: function(records, operation, success) {
+              //_d(records);
+              var countRows = (records.raw);//this.totalCount;
+              //_d('grid load:'+countRows);
+
+              if (countRows>0){
+                this.down('grid').width =500;
+                this.width = 800;
+              }
+              else {
+                this.down('grid').width =0; //todo:0
+                this.width = 300;
+              }
+            }
+          });
+
+
+
         }
+      }
     });
 
     this.callParent(arguments);

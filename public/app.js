@@ -10,10 +10,6 @@ Ext.Loader.setConfig({
 });
 Ext.Loader.setPath('Ext', '../resources/js');
 Ext.Loader.setPath('Ext.ux', '../resources/js/ux');
-Ext.require([
-   'Ext.ux.tab.VerticalBar',
-   'Ext.ux.CheckColumn'
-]);
 
 
 

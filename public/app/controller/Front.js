@@ -1,7 +1,5 @@
 Ext.define('ExtMVC.controller.Front', {
   extend: 'Ext.app.Controller',
-  stores: ['SearchResultStore','SearchClient'],//TODO нужно убрать отсюда это чтоб не делался запрос каждый раз
-  //models: ['Stock', 'ChartStock'],
   views: [
   'app.FormSearch',
   'app.SearchResult',
@@ -27,7 +25,6 @@ Ext.define('ExtMVC.controller.Front', {
   ],
   init: function() {
     console.log('init Front controller');
-    //console.log(ExtMVC.util.Common.getText());
 
 
     this.control({
@@ -75,31 +72,46 @@ Ext.define('ExtMVC.controller.Front', {
      // });
 
    //var msisdn = Ext.getCmp('msisdn').getValue();
+    var store = ExtMVC.model.SearchResult.getStoreSearch();
+    store.getProxy().setExtraParam('msisdn',params.msisdn);
+    store.getProxy().setExtraParam('idCard',params.idCard);
+    store.load({
+      scope   : this,
+      callback: function(records, operation, success) {
+             _d(records);
+      }
+   });
+_d('end');
 
-    var store = Ext.data.StoreManager.lookup('SearchClient');
+
+    var store = ExtMVC.model.SearchResult.getStore(); //Ext.data.StoreManager.lookup('SearchClient');
     store.getProxy().setExtraParam('msisdn',params.msisdn);
     store.getProxy().setExtraParam('idCard',params.idCard);
     store.load({
       scope   : this,
       callback: function(records, operation, success) {
         //the operation object contains all of the details of the load operation
-        console.log(records[0].data);
+        console.log('grid search');
+        console.log(records);
+        console.log(records);
 
         var grid = Ext.widget('SearchResult');
         var win = Ext.getCmp('widget.win-search');
 
         //TODO insert rows to grid store
         //grid.getView().getStore().loadData(records[0].data);
-
         //grid.getStore().reload();
         //_d(grid.getStore());
 
-      //if (grid.store.totalCount > 0){
-        grid.setWidth(500);
-        win.setWidth(800);
+      //var countRows = grid.getStore().totalCount;
+      //if (countRows > 0){
+      //  grid.setWidth(500);
+      //  win.setWidth(800);
 
-        this.doOpenClientCard('3U_yQKcxEeIAAEAs9LioApt3');
-      //}
+       var countRows=2;
+        if (countRows==1){
+          this.doOpenClientCard('3U_yQKcxEeIAAEAs9LioApt3');
+        }
     }
   }
   );
@@ -110,25 +122,23 @@ Ext.define('ExtMVC.controller.Front', {
 
 
   doBtnSearch: function(item) {
-
     //var pageUuid = getQueryParam('pageUuid');
     //check window existance
-    var win = Ext.getCmp('widget.win-search');//Ext.getCmp('widget.win-search'); //
+    var win = Ext.getCmp('widget.win-search');
     //create window
     if(!win) {
-      var win = Ext.create('widget.win-search', {
-        x: item.x,
-        y: item.y+30
-      });
+      var win = Ext.create('widget.win-search');
     }
-    //show window
-    if(!win.isVisible()) win.show();
 
-  //console.log(win.isVisible());
+    //show window
+    if(!win.isVisible()) {
+      win.show();
+    }
+    //set window position
+    win.setPosition(item.x, item.y+30);
   },
 
   doBtnHistory: function(item) {
-    var params = [item.x, item.y + 30];
     console.log(item);
   },
 

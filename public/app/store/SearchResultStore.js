@@ -1,7 +1,7 @@
 Ext.define('ExtMVC.store.SearchResultStore', {
   extend: 'Ext.data.Store',
   model: 'ExtMVC.model.SearchResult',
-  autoLoad: true,
+  autoLoad: false,
   storeId: 'SearchResultStore',
   proxy: {
     type: 'direct',

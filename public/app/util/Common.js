@@ -29,14 +29,18 @@ function getStore(store_id, store_config, store_type) {
   //get static store
   var store = Ext.StoreMgr.get(store_id);
   if (!store) {
-    _d('get dynamic store '+store_id);
     //try create store
+    //_d('get dynamic store: '+store_config.proxy.directFn);
+
     store = Ext.create('Ext.data.Store', store_config);
     //add store to array store
     Ext.StoreMgr.add(store_id, store);
 
     return store;
   }
+
+
+
 
 _d('get static store '+store_id);
 return store;

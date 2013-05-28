@@ -1,4 +1,5 @@
 //todo: убрать этот объявление отседа
+//вообще узаменить это сторе моделью с методом getStore
 Ext.ns('Umb.data');
 Ext.define('Umb.data.BalancesStore', {
   extend: 'Ext.data.ArrayStore',
@@ -124,7 +125,7 @@ Ext.define('ExtMVC.util.Client', {
   },
 
   loadClientBalancesInfo : function() {
-    var clientBalancesStore = new Umb.data.BalancesStore();
+    var clientBalancesStore = new Umb.data.BalancesStore(); //ExtMVC.store.BalancesStore.getStore();
     var cmp = this;
 
     this.headerLoadMaskMng(true);
@@ -140,9 +141,8 @@ Ext.define('ExtMVC.util.Client', {
   },
 
   loadSelectedSubscriberBalancesInfo : function() {
-    //var subscriberBalancesStore = Ext.data.StoreManager.lookup('BalancesStore');
     // хранилища данных для балансов клиента и абонента
-    var subscriberBalancesStore = new Umb.data.BalancesStore();
+    var subscriberBalancesStore = new Umb.data.BalancesStore(); //ExtMVC.store.BalancesStore.getStore();
     var cmp = this;
 
     this.headerLoadMaskMng(true);

@@ -18,7 +18,7 @@ Ext.define('ExtMVC.view.clientcard.Toolbar', {
 	                 text: 'Заметки',
 	                 handler: function(item, ev) {
                      var params = [item.x, item.y + 30];
-                     component.fireEvent('openConversation', params);
+                     component.fireEvent('openNotes', params);
 	                 }
 	             },{
 	                 text: 'Доп. продажи',

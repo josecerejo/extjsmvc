@@ -5,7 +5,7 @@ Ext.define('ExtMVC.controller.ClientCard', {
   views: [
   'clientcard.Toolbar',
   'clientcard.ClientData',
-  'clientcard.win.Subscribers','clientcard.win.Conversation'
+  'clientcard.win.Subscribers','clientcard.win.Notes'
   ],
 
   refs: [
@@ -22,8 +22,8 @@ Ext.define('ExtMVC.controller.ClientCard', {
     selector: 'win.Subscribers'
   },
   {
-    ref: 'winConversation',
-    selector: 'win.Conversation'
+    ref: 'winNotes',
+    selector: 'win.Notes'
   }
   ],
 
@@ -32,11 +32,10 @@ Ext.define('ExtMVC.controller.ClientCard', {
     //var pageUuid = ExtMVC.util.Common.getQueryParam('pageUuid');
 
 
-
     this.control({
       'toolbar': {
         openSubscribers: this.openSubscribersWindow,
-        openConversation: this.openConversationWindow,
+        openNotes: this.openNotesWindow,
         openUpsales: this.openUpsalesWindow
       },
       'ClientCardData':{
@@ -48,9 +47,9 @@ Ext.define('ExtMVC.controller.ClientCard', {
 
   loadClientData:function(){
 
-    var clientInfoStore = Ext.data.StoreManager.lookup('ClientInfoStore');
+    var store = ExtMVC.model.ClientInfo.getClientStore();
     //clientInfoStore.getProxy().setExtraParam('pageUuid', pageUuid);
-    clientInfoStore.load({
+    store.load({
       'params':getQueryParam('pageUuid'),
       callback: function(records, operation, success) {
         var client = records[0].raw;
@@ -70,8 +69,8 @@ Ext.define('ExtMVC.controller.ClientCard', {
     );
 
 
-    var Store = ExtMVC.model.ClientInfo.getClientBalancesStore();
-    Store.load({
+    var store = ExtMVC.model.ClientInfo.getClientBalancesStore();
+    store.load({
       'params':getQueryParam('pageUuid'),
       callback: function(records, operation, success) {
         var client = records[0].raw;
@@ -85,74 +84,40 @@ Ext.define('ExtMVC.controller.ClientCard', {
 
   //functions
   openSubscribersWindow:function(params) {
-    //console.log(params);
-    //console.log(this.getQueryParam('pageUuid'));
-    //this.getWinSubscribers.show();
-    // var pageUuid = getQueryParam('pageUuid');
-    /*
-    var win = Ext.create('widget.window', {
-      title: 'Список абонентов клиента',
-      closable: true,
-      closeAction: 'hide',
-      width: 600,
-      minWidth: 400,
-      height: 400,
-      x: params.x,
-      y: params.y,
-      //layout: { type: 'fit', padding: 5 },
-     items: {  // Let's put an empty grid in just to illustrate fit layout
-        xtype: 'grid',
-        border: false,
-        columns: [{header: 'World'}],                 // One header just for show. There's no data,
-        store: Ext.create('Ext.data.ArrayStore', {}) // A dummy empty data store
+
+//check window existance
+    var winID = 'widget.win-subscribers';
+    var win = Ext.getCmp(winID);
+    //create window
+    if(!win) {
+      var win = Ext.create(winID);
+      win.show();
     }
-    });
-    win.show();
-*/
-    var win = Ext.create('widget.win-subscribers');
-    win.x = params.x;
-    win.y = params.y;
-    //win.loader.params.pageUuid = encodeURIComponent(pageUuid);
-    win.show();
-
-  /*if (!subscribersWindow) {
-				        	 subscribersWindow = Ext.create('widget.window', {
-				                 title: 'Список абонентов клиента',
-				                 closable: true,
-				                 closeAction: 'hide',
-				                 width: 600,
-				                 minWidth: 400,
-				                 height: 400,
-				                 x: params.x,
-				                 y: params.y,
-				                 //layout: { type: 'fit', padding: 5 },
-				                 loader: {
-	                         url: 'clientcard/subscribers',
-	                         contentType: 'html',
-	                         scripts: true,
-	                         autoLoad: true,
-	                         params: {pageUuid: encodeURIComponent(this.pageUuid)}
-		                     }
-				             });
-					      // }
-					       if (conversationWindow && conversationWindow.isVisible()) { conversationWindow.close(); }
-					       if (upsalesWindow && upsalesWindow.isVisible()) { upsalesWindow.close(); }
-					       if (subscribersWindow.isVisible()) {
-					    	   subscribersWindow.close();
-						     } else {
-						    	 subscribersWindow.show();
-					       }
-                 */
-  },
-  openConversationWindow:function(params) {
-    console.log('openConversationWindow');
-
-    var win = Ext.create('widget.win-conversation');
-    win.x = params.x;
-    win.y = params.y;
-    win.show();
+    //show window
+    if(!win.isVisible()) win.show();
+    //set window position
+    win.setPosition(params.x, params.y+30);
 
   },
+
+
+  openNotesWindow:function(params) {
+
+    //check window existance
+    var winID = 'widget.win-notes';
+    var win = Ext.getCmp(winID);
+    //create window
+    if(!win) {
+      var win = Ext.create(winID);
+      win.show();
+    }
+    //show window
+    if(!win.isVisible()) win.show();
+    //set window position
+    win.setPosition(params.x, params.y+30);
+
+  },
+  
   openUpsalesWindow:function(params) {
     console.log('openUpsalesWindow');
   }
