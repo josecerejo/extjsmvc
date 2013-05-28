@@ -10,7 +10,7 @@ Ext.define('ExtMVC.model.NotesTree', {
           fields: [
          { name: 'id', type:'int'},
          { name: 'text',  type: 'string'},
-         { name: 'cat1', type: 'bool' },
+         { name: 'cat1', type: 'int' },
          { name: 'cat2', type: 'bool' },
          { name: 'cat3', type: 'bool' },
          { name: 'cat4', type: 'bool' },
@@ -21,18 +21,18 @@ Ext.define('ExtMVC.model.NotesTree', {
 		        children: [
 		            { text: "Пакеты и скидки", expanded: true, cat1: true, cat2: false, cat3: true, cat4: false, cat5: true,
 			            children: [
-		                { text: "Пакеты и скидки на SMS", leaf: true, cat1: false, cat2: false, cat3: false, cat4: false, cat5: false },
-		                {  text: "Пакеты и скидки на MMS", leaf: true, cat1: 'true', cat2: false, cat3: true, cat4: false, cat5: true }
+		                { text: "Пакеты и скидки на SMS", leaf: true, cat1: 1, cat2: false, cat3: false, cat4: false, cat5: false },
+		                {  text: "Пакеты и скидки на MMS", leaf: true, cat1: 0, cat2: false, cat3: true, cat4: false, cat5: true }
 		              ]
 		            },
 		            {  text: "Тарифы", expanded: true, cat1: true, cat2: false, cat3: 'true', cat4: false, cat5: true,
 			            children: [
-		                { text: "Бонусные программы теле2", leaf: true, cat1: false, cat2: false, cat3: false, cat4: false, cat5: false },
-		                { text: "Текущие акции компании", leaf: true, cat1: true, cat2: false, cat3: true, cat4: false, cat5: true },
-				            { text: "Тарифы на МГ/МН звонки", leaf: true, cat1: true, cat2: false, cat3: true, cat4: false, cat5: true}
+		                { text: "Бонусные программы теле2", leaf: true, cat1: -1, cat2: false, cat3: false, cat4: false, cat5: false },
+		                { text: "Текущие акции компании", leaf: true, cat1: -1, cat2: false, cat3: true, cat4: false, cat5: true },
+				            { text: "Тарифы на МГ/МН звонки", leaf: true, cat1: -1, cat2: false, cat3: true, cat4: false, cat5: true}
 		              ]
 		            },
-                { text: "PIN/PUK коды", expanded: true, cat1: true, cat2: false, cat3: true, cat4: false, cat5: true}
+                { text: "PIN/PUK коды", expanded: true, cat1: 0, cat2: false, cat3: true, cat4: false, cat5: true}
 		        ]
 		    },
 

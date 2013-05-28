@@ -5,20 +5,22 @@ Ext.define('ExtMVC.view.clientcard.win.NotesTemplate', {
   alias : 'widget.win-notes-template',
   title : 'Шаблон заметки',
   layout: 'vbox',
-  align : 'stretch',
+  align : 'right',
   closable: true,
   closeAction: 'hide',
-  width: 300,
-  minWidth: 300,
-  height: 400,
+  width: 350,
+  minWidth: 350,
+  height: 250,
   layout: 'vbox',
+  margin:5,
+  modal:true,
   defaults: {
       border: false,
       xtype: 'panel',
       width:'100%',
-      height:30,
       layout: 'hbox',
-      bodyPadding:'padding:2px 5px 0px 5px'
+      bodyPadding:'padding:5px',
+      margin:'0px 5px 0px 5px'
   },
   items:null,
   initComponent: function() {
@@ -39,7 +41,7 @@ Ext.define('ExtMVC.view.clientcard.win.NotesTemplate', {
     var tpltype = Ext.create('Ext.form.ComboBox', {
       id: 'tpltypecombo',
       name:'tpltypecombo',
-      fieldLabel:'Шаблон комментария',
+      emptyText:'Выберите шаблон комментария',
       store: tplStore,
       displayField:'name',
       valueField:'id',
@@ -50,52 +52,69 @@ Ext.define('ExtMVC.view.clientcard.win.NotesTemplate', {
       minChars:0,
       valueNotFoundText:false,
       editable:false,
-      allowBlank: false,
-      forceSelection: true,
-      labelAlign: 'top',
-      width: 230
+     // allowBlank: false,
+     // forceSelection: true,
+      height: 35
     });
     tpltype.getStore().getAt(0);
 
 
 
     Ext.apply(this,{
+
         items: [tpltype,
                {
               items: [
-                {
-                xtype:'checkboxfield',
-                boxLabel: 'Регистрировать на всех',
-                flex: 1,
-                align: 'left'
-                },{
+                 {
+                xtype:'displayfield', //'component'
+                flex: 1
+                },
+              {
                 xtype:'button',
-                width: 20,
-                icon: '../resources/themes/images/default/grid/refresh.gif',
-                align: 'right'
+                text:'!',
+                width: 30,
+               // icon: '../resources/themes/images/default/grid/refresh.gif',
+                align: 'right',
+                margin:'0px 5px',
+                enableToggle:true
+                },
+                {
+                xtype:'button',
+                text:'SMS',
+                width: 60,
+               // icon: '../resources/themes/images/default/grid/refresh.gif',
+                align: 'right',
+                enableToggle:true
                 }
                 ]
-              }, {
-            items: [{
-                xtype:'textfield',
-                emptyText:'Введите название причины обращения',
-                flex: 1,
-                align: 'left',
-                padding:'2 100 2 0'
-            },{
-                xtype:'button',
-                text: 'Сбросить фильтры',
-                width: 130,
-                align: 'right'
-            }]
-        }],
+              },
+              {
+                  xtype     : 'textareafield',
+                  fieldLabel:'Teкст комментария',
+                  labelAlign :'top',
+                  flex: 1,
+                  grow:true,
+                  name: 'comment',
+                  margin:'0px 5px 5px 5px'
+              }
+  ],
 
       buttons: [
+          {
+          text: 'Отмена',
+          handler: function() {
+            cmp.hide();
+          }
+        },
         {
-          text: 'Сохранить',
+         xtype:'displayfield', //'component'
+         flex: 1
+        },
+        {
+          text: 'OK',
           scope: this,
           //id: save_button_id,
-          //formBind : true,
+          formBind : true,
           handler: function() {
 /*
             if (!component.dataForm.getForm().isValid()) {
@@ -104,12 +123,6 @@ Ext.define('ExtMVC.view.clientcard.win.NotesTemplate', {
             }
             var formParams = component.dataForm.getForm().getValues();
           */
-          }
-        },
-        {
-          text: 'Отменить',
-          handler: function() {
-            component.hide();
           }
         }
       ]

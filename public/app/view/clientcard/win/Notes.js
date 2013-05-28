@@ -13,9 +13,9 @@ Ext.define('ExtMVC.view.clientcard.win.Notes', {
   align : 'stretch',
   closable: true,
   closeAction: 'hide',
-  width: 600,
+  width: 500,
   minWidth: 400,
-  height: 600,
+  height: 550,
   defaults: {
            width:'100%'
         },
