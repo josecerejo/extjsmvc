@@ -1,30 +1,32 @@
 Ext.define('ExtMVC.model.SearchResult', {
   extend: 'Ext.data.Model',
-   fields: [{name: 'id'},{name: 'name'},{name: 'accountNumber'}],
+  fields: [
+  {
+    name: 'uuid'
+  },
+
+  {
+    name: 'msisdn',
+    mapping:'result.msisdn'
+  },
+
+  {
+    name: 'name',
+    mapping:'result.name'
+  }
+  ],
   statics: {
     getStore: function() {
-      var config = getStoreConfig(this.modelName, 'billingApiWrapper.findClientByMsisdnAndIdentityCardNumber', {
+      var api = 'clientCardApi.findSubscribers';
+      var config = getStoreConfig(this.modelName, api, {
         autoLoad: false
       });
-      config.proxy.paramOrder = 'msisdn,idCard';
-      //config.proxy.reader.root = 'result';
-
-      return getStore('model_stores.' + this.modelName, config);
-    },
-
-     getStoreSearch: function() {
-       var config = {
-        autoLoad: false,
-        proxy: {
-          type: 'ajax',
-          url:  'clientsearch/find',
-          actionMethods:  {create: "POST", read: "POST", update: "POST", destroy: "POST"}
-        },
-        model: this.modelName
+      config.proxy.paramOrder = 'param1';
+  /*    config.proxy.extraParams = {
+        'param1':formValues
       };
-
-
-      return getStore('model_stores.'+this.modelName+'_search', config);
+*/
+      return getStore(this.modelName + api, config);
     }
   }
 });

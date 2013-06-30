@@ -1,85 +1,147 @@
-var myLocalStore = Ext.state.LocalStorageProvider.create();
-   myLocalStore.set('test','1234');
-
- Ext.define('ExtMVC.view.clientcard.win.NotesTree', {
+Ext.define('ExtMVC.view.clientcard.win.NotesTree', {
   extend: 'Ext.tree.Panel',
-  uses:['ExtMVC.model.NotesTree','Ext.ux.CheckColumn', 'ExtMVC.view.clientcard.win.NotesTemplate'],
+  uses:['ExtMVC.model.Incidents','ExtMVC.model.NotesTree','Ext.ux.CheckColumn', 'ExtMVC.view.clientcard.win.NotesTemplate'],
   requires:['Ext.ux.CheckColumn'],
   id : 'win-notes-tree',
   alias : 'widget.win-notes-tree',
   title: 'Регистрация заметок',
-  //height: 300,
   flex:2,
   rootVisible: false,
+  catStore:null,
   viewConfig:{
     markDirty: false
   },
-
-  initComponent: function() {
+ mask:null,
+ initComponent: function() {
 
     var cmp = this;
     cmp.store  = ExtMVC.model.NotesTree.getStore();
+    cmp.mask = new Ext.LoadMask(cmp, {msg: "Подождите, идет загрузка данных..."});
 
-    //var myLocalStore = Ext.state.LocalStorageProvider.create();
-    //myLocalStore.set('test','1234');
-    //var store = Ext.create('Ext.data.Store', {
-    //model: "Search"
-    //});
 
+    //var s = ExtMVC.model.Incidents.getCategoriesStore();
+    /*
+  var s = ExtMVC.model.Incidents.getCategoriesStore();
+    s.load({
+      scope : this,
+      callback: function(records, operation, success) {
+        var arr =[];
+
+
+             Ext.each(records, function(item) {
+                var i = item.raw;
+                arr.push({
+                          header: i.shortName,
+                          dataIndex: 'cat' + i.id,
+                          xtype: 'checkcolumn',
+                          width: '10%'
+                        });
+            });
+            //_d(arr);
+            cmp.items.push(arr[0]);
+
+           // cmp.items = arr;
+      }
+    });
+
+*/
+    /*
+var tmp = [];
+incidentsApi.getCategories('GENERIC', function(categories) {
+ 	        //alert('Загружен список категорий: ' + JSON.stringify(categories));
+          _d(tmp);
+
+          tmp.push({
+          xtype: 'treecolumn',
+          header: 'Название/Причина',
+          dataIndex: 'text',
+          width: '48%'
+         });
+
+ 	      });
+_d(tmp);
+*/
+
+
+
+    var items = [{
+      xtype: 'treecolumn',
+      header: 'Название/Причина',
+      dataIndex: 'text',
+      width: '48%'
+    },
+    {
+      header: 'Инфо',
+      dataIndex: 'cat0',
+      renderer: this.customrenderer
+    },
+
+    {
+      header: 'Техн',
+      dataIndex: 'cat1',
+      renderer: this.customrenderer
+    },
+    {
+      header: 'Тариф',
+      dataIndex: 'cat2',
+      renderer: this.customrenderer
+    },
+
+    {
+      header: 'Прод',
+      dataIndex: 'cat3',
+      renderer: this.customrenderer
+    },
+    {
+      header: 'Адм.',
+      dataIndex: 'cat4',
+      renderer: this.customrenderer
+    }
+    ];
 
     Ext.apply(this, {
+      listeners: {
+        afterrender: cmp.onAfterrender.bind(cmp),
+        load: cmp.onLoad.bind(cmp)
+      },
       columns: {
         defaults:{
           xtype: 'checkcolumn',
           width: '10%',
           listeners: {
-            'checkchange': this.onCheckCase,
+            scope:this,
+            'checkchange': this.onCheck,
             'beforecheckchange':this.onBeforecheckchange
           }
         },
-        items:[{
-          xtype: 'treecolumn',
-          header: 'Название/Причина',
-          dataIndex: 'text',
-          width: '48%'
-        },
-        {
-          header: 'Инфо',
-          dataIndex: 'cat1',
-          renderer: this.customrenderer
-          },
-
-          {
-          header: 'Техн',
-          dataIndex: 'cat2',
-          renderer: this.customrenderer
-        },
-{
-          header: 'Тариф',
-          dataIndex: 'cat3',
-          renderer: this.customrenderer
-          },
-
-          {
-          header: 'Прод',
-          dataIndex: 'cat4',
-          renderer: this.customrenderer
-        },
-{
-          header: 'Адм.',
-          dataIndex: 'cat5',
-          renderer: this.customrenderer
-        }
-        ]
+        items: items
       }
     });
 
     this.callParent(arguments);
   },
 
+  onAfterrender:  function() {
+    //_d('afterrender');
+   this.mask.show();
+  },
+  onLoad:  function() {
+    _d('onload');
+   // var NotesGrid  = Ext.getCmp('win-notes-grid');
+    //NotesGrid.getStore().load();
+    this.mask.hide();
+  },
+
+
   customrenderer : function(value,m,row){
+    //_d('renderer value: '+value);
+    //_d(row);
+
     //show checkbox only on leaf rows
     if (!row.get('leaf')) {
+      return '';
+    }
+    if (value === ''){
       return '';
     }
 
@@ -87,101 +149,50 @@ var myLocalStore = Ext.state.LocalStorageProvider.create();
     cls = [cssPrefix + 'grid-checkheader'];
 
 
-    if (value==1) {
-          cls.push(cssPrefix + 'grid-checkheader-checked');
+    if (value == 1) {
+      cls.push(cssPrefix + 'grid-checkheader-checked');
     }
-    if (value < 0){
-          cls.push(cssPrefix + 'grid-checkheader-disabled');
+    if (value == -1){
+      cls.push(cssPrefix + 'grid-checkheader-disabled');
     }
 
     return '<div class="' + cls.join(' ') + '">&#160;</div>';
   },
 
   onBeforecheckchange : function(column, recordIndex, checked) {
-  if (checked){
-
-    // var store = ExtMVC.model.NotesTree.getStore();
-    // var record = store.getAt(recordIndex);
-  // _d(record);
-
-
-}
-
-  //todo: check auto checked cells in first store array
-  //  var store = ExtMVC.model.NotesTree.getStore();
-  //  var record = store.getAt(recordIndex);
-  //  var cell = record.get(column.dataIndex);
-
+   // _d(this);
   },
-  onCheckCase : function(column, recordIndex, checked) {
-
-    var treeStore = ExtMVC.model.NotesTree.getStore();
-    var record = treeStore.getAt(recordIndex);
-    var idCell =  recordIndex +'.'+ column.dataIndex;
-    //only leaf is checkable
-    if (record.get('leaf')){
-      // alert('column=' + column.dataIndex + ', recordIndex=' + recordIndex + ', checked=' + checked);
-
-      var NotesGrid  = Ext.getCmp('win-notes-grid');
-      var NotesTree  = Ext.getCmp('win-notes-tree');
-      //show NotesGrid
-      NotesGrid.setVisible(true);
-
-      if (checked==1) {
-        //open template add window
-        NotesTree.openAddTemplate(record);
-
-        //insert note row in NoteGrid
-        var item = {
-          id: idCell,
-          name: record.get('text'),
-          comment: 'comment',
-          cat: column.dataIndex,
-          butt1:1,
-          butt2:2,
-          butt3:3
-        };
-        NotesGrid.addRow(item);
-
-      //	alert('Добавлена заметка, причина: ' + record.get('text') + ', категория ' + column.dataIndex);
-      } else {
-        NotesGrid.deleteByUID(idCell);
-      // delete case by caseId = record.get(column.dataIndex);
-      //alert('Удалена заметка, причина: ' + record.get('text') + ', категория ' + column.dataIndex);
-      }
-    }
+  onCheck : function(column, recordIndex, checked) {
+  //_d('onCheck: '+checked);
+    this.fireEvent('doNotesTreeCheck', column, recordIndex, checked);
   },
+  onUnCheck: function(rowIndex){
+    _d('onUnCheck: '+rowIndex);
 
-  unCheck: function(rowIndex){
     var row = rowIndex.split('.');
-    var treeStore = ExtMVC.model.NotesTree.getStore();
-    var record = treeStore.getAt(row[0]);
+    var record = this.getStore().getById(row[0]);
     record.set(row[1], false);
   },
 
+    doCheck: function(rowIndex){
+    _d('doCheck: '+rowIndex);
 
-  reloadTree: function(){
-    this.store = ExtMVC.model.NotesTree.getStore();
-    this.store.reload();
+    var row = rowIndex.split('.');
+    var record = this.getStore().getById(row[0]);
+    record.set(row[1], 1);
   },
 
+  reloadTree: function(){
 
-  openAddTemplate: function(record){
-    var winID = 'widget.win-notes-template';
-    var win = Ext.getCmp(winID);
-    //create window
-    if(!win) {
-      var win = Ext.create(winID);
-    }
+    this.mask.show();
+    this.getStore().load();
 
-    //show window
-    if(!win.isVisible()) {
-      win.show();
-    }
-  //set window position
-  //win.setPosition(item.x, item.y+30);
+    var NotesGrid  = Ext.getCmp('win-notes-grid');
+    NotesGrid.getStore().load();
 
   }
+
+
 
 
 

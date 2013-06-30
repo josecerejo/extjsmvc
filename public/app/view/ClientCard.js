@@ -2,12 +2,9 @@ Ext.define('ExtMVC.view.ClientCard', {
 
   extend: 'Ext.container.Viewport',
   requires: [
-    'ExtMVC.view.app.Toolbar',
-    'ExtMVC.view.clientcard.ClientData',
-    'ExtMVC.view.clientcard.ClientTabs'],
-  uses: [
-  //  'ExtMVC.view.app.PortalPanel'
-  ],
+  'ExtMVC.view.app.Toolbar',
+  'ExtMVC.view.clientcard.ClientData',
+  'ExtMVC.view.clientcard.ClientTabs'],
 
   initComponent: function(){
 

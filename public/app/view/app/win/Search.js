@@ -1,93 +1,32 @@
 Ext.define('ExtMVC.view.app.win.Search', {
   extend: 'Ext.window.Window',
- /* requires: [
-  'ExtMVC.view.app.FormSearch',
-  'ExtMVC.view.app.SearchResult'
-  ],
-*/
   alias : 'widget.win-search',
-  id:'widget.win-search',
+  id:'win-search',
   title : 'Список абонентов клиента',
   layout: {
-   type: 'hbox',
+    type: 'hbox',
     pack: 'start',
     align: 'stretch'
   },
- // collapsible: true,
- // split: true,
- // bodyStyle: 'padding:0px',
-  width: 800,
+  width:300,
   minWidth: 300,
   height: '90%',
   closeAction: 'hide',
   closable :true,
- // items:[
+
   initComponent: function() {
 
-   component = this;
-   //var form = Ext.create('ExtMVC.view.app.SearchResult');
+    var cmp = this;
 
-   /*var grid = Ext.create('ExtMVC.view.app.SearchResult',{
-     collapsible: true,
-    region:'east',
-    margins: '0 0 0 0',
-    width:'70%'
-   });
-   */
-   //grid.store = Ext.data.StoreManager.lookup('SearchResultStore');
-   //grid.store.load();
-
-   //_d(grid.store.totalCount);
-   var currwidth = 600; //grid.store.totalCount>0? 600: 400;
-
-  Ext.apply(this, {
-      width:currwidth,
-
+    //var form = Ext.create('ExtMVC.view.app.FormSearch');
+    //var grid = Ext.create('ExtMVC.view.app.SearchResult');
+    Ext.apply(this, {
       items: [{
-    xtype :'FormSearch',
-    title: 'Form',
-    region:'west',
-    margins: '0 0 0 0',
-    cmargins: '0 0 0 0',
-    width: 300,
-    collapsible: true
-  },
-{
-    xtype :'SearchResult',
-    collapsible: true,
-    region:'east',
-    margins: '0 0 0 0'
-    //width:'70%'
-  }
-],
-      listeners: {
-          afterrender: function() {
-             var grid = this.down('grid'); //Ext.getCmp('widget.SearchResult');
-            _d('win afterrender');
-
-
-           grid.store.load({
-            scope   : this,
-            callback: function(records, operation, success) {
-              //_d(records);
-              var countRows = (records.raw);//this.totalCount;
-              //_d('grid load:'+countRows);
-
-              if (countRows>0){
-                this.down('grid').width =500;
-                this.width = 800;
-              }
-              else {
-                this.down('grid').width =0; //todo:0
-                this.width = 300;
-              }
-            }
-          });
-
-
-
-        }
-      }
+        xtype :'FormSearch'
+      },
+      {
+        xtype :'SearchResult'
+      }]
     });
 
     this.callParent(arguments);

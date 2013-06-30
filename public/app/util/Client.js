@@ -1,4 +1,87 @@
-//todo: убрать этот объявление отседа
+Ext.define('ExtMVC.util.Client', {
+  extend:'Ext.util.Observable',
+  singleton: true,
+  pageUuid: null,
+  client:{},
+  subscriber:{},
+  balances:{},
+
+  constructor	: function(options){
+
+    _d('constructor '+this.pageUuid);
+
+    this.addEvents(
+      "clientloaded"
+      );
+
+    var cmp = this;
+
+    Ext.apply(this,options || {});
+    this.callParent(arguments);
+
+    //this.init();
+  },
+
+
+  init: function(pageUuid){
+    var cmp = this;
+    cmp.pageUuid = (pageUuid || cmp.pageUuid);
+
+    var store = ExtMVC.model.ClientInfo.getClientStore(cmp.pageUuid);
+    store.load({
+      scope:cmp,
+      callback: function(records, operation, success) {
+        cmp.doApply({
+          'client': records[0].raw
+        });
+
+        var store = ExtMVC.model.ClientInfo.getClientSubscriber(this.pageUuid);
+        store.load({
+          scope:cmp,
+          callback: function(records, operation, success) {
+            cmp.doApply({
+              'subscriber': records[0].raw
+            });
+
+            var store = ExtMVC.model.ClientInfo.getBalancesStore(this.pageUuid, 'getSelectedSubscriberBalances');
+            store.load({
+              scope:cmp,
+              callback: function(records, operation, success) {
+                cmp.doApply({
+                  'balances': records[0].raw
+                });
+
+                Core.app.fireEvent('clientloaded', cmp);
+              }
+            });
+          }
+        });
+      }
+    });
+  }, //init()
+
+  doApply: function(options){
+    Ext.apply(this, options || {});
+  },
+
+  selectAndLoadSubscriber: function(subscriberId){
+  var cmp = this;
+    clientCardApi.selectSubscriber(this.pageUuid, subscriberId, function(subscriber) {
+     _d('Client::selectAndLoadSubscriber');
+    // _d(subscriber);
+     cmp.init();
+      //cmp.updateSubscriberInfo(subscriber);
+    });
+  }
+
+});
+
+
+
+
+
+//
+////todo: убрать этот объявление отседа
 //вообще узаменить это сторе моделью с методом getStore
 Ext.ns('Umb.data');
 Ext.define('Umb.data.BalancesStore', {
@@ -21,7 +104,7 @@ Ext.define('Umb.data.BalancesStore', {
 });
 
 
-Ext.define('ExtMVC.util.Client', {
+Ext.define('ExtMVC.util.ClientOLD', {
   //  singleton: true,
   pageUuid: null,
   clientId: null,

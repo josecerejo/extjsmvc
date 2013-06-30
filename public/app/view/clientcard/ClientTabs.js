@@ -45,8 +45,8 @@ Ext.define('ExtMVC.view.clientcard.ClientTabs', {
         }
         ]
       },{
-        title: 'Тех. проблеммы',
-        html: 'Тех. проблеммы содержание'
+        title: 'Тех. проблемы',
+        html: 'Тех. проблемы содержание'
       }
       ]
     });

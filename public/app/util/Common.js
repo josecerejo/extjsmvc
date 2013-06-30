@@ -12,38 +12,38 @@ Ext.define('ExtMVC.util.Common', {
 
 
 function getQueryParam (name){
-		   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-		      return decodeURIComponent(name[1]);
- }
+  if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+    return decodeURIComponent(name[1]);
+}
 
-function outString(s) { return (s ? s : ''); }
+function outString(s) {
+  return (s ? s : '');
+}
 
 function _d(v){
-  console.log(v);
+  //console.log(v);
 }
 
 
 
 
-function getStore(store_id, store_config, store_type) {
+function getStore(storeId, storeConfig, storeType) {
   //get static store
-  var store = Ext.StoreMgr.get(store_id);
+  var store = Ext.StoreMgr.get(storeId);
   if (!store) {
     //try create store
-    //_d('get dynamic store: '+store_config.proxy.directFn);
+    _d('get dynamic store: '+storeConfig.proxy.directFn);
 
-    store = Ext.create('Ext.data.Store', store_config);
+    storeType = storeType? storeType : 'Ext.data.Store';
+    store = Ext.create(storeType, storeConfig);
     //add store to array store
-    Ext.StoreMgr.add(store_id, store);
+    Ext.StoreMgr.add(storeId, store);
 
     return store;
   }
 
-
-
-
-_d('get static store '+store_id);
-return store;
+  _d('get cache store '+storeId);
+  return store;
 }
 
 
@@ -66,15 +66,73 @@ function getStoreConfig(model, api, extra) {
       directFn: api,
       reader: {
         type: 'json'
-        //root: root
+      //root: root
       }
-    },
-    model: model
+    }
   };
+
+
+  if (model){
+    config.model = model;
+  }
 
   if (extra) {
     config = Ext.apply(config, extra);
   }
 
   return config;
+}
+
+
+
+function array_values( input ) {    // Return all the values of an array
+  var tmp_arr = new Array(), cnt = 0;
+  for ( key in input ){
+    tmp_arr[cnt] = input[key];
+    cnt++;
+  }
+
+  return tmp_arr;
+}
+
+
+function array_is_empty( input ) {
+  for ( key in input ){
+    if(input[key])
+      return false;
+  }
+
+  return true;
+}
+
+
+function is_array(inputArray) {
+return inputArray && !(inputArray.propertyIsEnumerable('length')) && typeof inputArray === 'object' && typeof inputArray.length === 'number';
+}
+
+
+
+function obj2array(out, obj, prefix) {
+
+  for (var i in obj) {
+      var key = prefix+'.'+i;
+      var val = obj[i];
+
+      if(typeof val == 'object') {
+         obj2array(out,val,key);
+      }
+      else {
+        out[key] = val;
+      }
+  }
+
+return out;
+}
+
+
+function setComponentValues (cmp, obj, name){
+  _d('setComponentValues '+name);
+
+  var data = obj2array({}, obj, name);
+  cmp.setValues(data);
 }

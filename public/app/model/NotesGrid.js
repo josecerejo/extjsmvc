@@ -1,28 +1,43 @@
 Ext.define('ExtMVC.model.NotesGrid', {
-    extend: 'Ext.data.Model',
-    fields: [
-       {name: 'id'},
-       {name: 'name'},
-       {name: 'cat'},
-       {name: 'comment'},
-       {name: 'butt1'},
-       {name: 'butt2'},
-       {name: 'butt3'}
-    ],
+  extend: 'Ext.data.Model',
 
-    statics: {
-    getStore: function() {
-      var store = Ext.StoreMgr.get('model_stores.'+this.modelName);
-      if (!store) {
-        store = Ext.create('Ext.data.Store',{
-                model:this.modelName
-                }
-              );
+  statics: {
+    getStore: function(pageUuid) {
 
-        Ext.StoreMgr.add('model_stores.'+this.modelName, store);
-      }
+      return getStore(this.modelName + '.getStore', {
+        autoLoad: true,
+        fields: [
+          {
+          name: 'id', mapping:'id'
+         },
+        {
+          name: 'name',mapping:'subjectId'
+        },{
+          name: 'cat', mapping:'categoryId'
+        },{
+          name: 'comment', mapping:'description'
+        }, {
+          name: 'important'
+        },{
+          name: 'sms'
+        },{
+          name: 'btndelete'
+        }],
+        proxy: {
+          type: 'direct',
+          directFn: 'clientCardApi.getConversationCases',
+          reader: {
+            type: 'json'
+          },
+          extraParams: {
+            'pageUuid': pageUuid
+          },
+          paramOrder : 'pageUuid'
+        },
+        model: this.modelName
+      });
 
-      return store;
     }
+
   }
 });

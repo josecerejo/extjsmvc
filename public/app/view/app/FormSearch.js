@@ -6,17 +6,18 @@ Ext.define('ExtMVC.view.app.FormSearch', {
   frame: true,
   title: 'Поиск абонента',
   bodyStyle:'padding:5px 5px 0',
-  //width: 300,
+  width: 300,
+  collapsible: true,
   defaults: {
+    xtype: 'textfield',
     width: '95%',
     labelAlign: 'top',
     msgTarget: 'side'
   },
-  defaultType: 'textfield',
 
   initComponent: function() {
 
-    var component = this;
+    var cmp = this;
 
     var regionData = [
     [0,'Адыгея республика'],
@@ -24,7 +25,11 @@ Ext.define('ExtMVC.view.app.FormSearch', {
     [3,'Алтай республика']
     ];
     var regionStore = Ext.create('Ext.data.ArrayStore', {
-      fields: [{name: 'id'},{name: 'name'}],
+      fields: [{
+        name: 'id'
+      },{
+        name: 'name'
+      }],
       data: regionData,
       autoLoad: false
     });
@@ -48,7 +53,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
       labelAlign: 'top',
       width: 230
     });
-    region.getStore().getAt(0);
+    region.store.getAt(0);
 
 
     Ext.apply(this, {
@@ -58,10 +63,10 @@ Ext.define('ExtMVC.view.app.FormSearch', {
         fieldLabel: 'MSISDN',
         id: 'msisdn',
         name: 'msisdn',
-        value: '1111111111',
+        value: '',
         maxLength: 10,
         minLength: 10,
-        emptyText:'9'
+        emptyText:'1111111111'
       }, {
         fieldLabel: 'Городской номер',
         id: 'cityphone',
@@ -88,7 +93,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
         fieldLabel: 'Номер лицевого счета',
         id: 'idpersonalaccount',
         name: 'idpersonalaccount',
-        allowBlank:false,
+        allowBlank:true,
         value: '',
         maxLength: 10,
         minLength: 5
@@ -97,7 +102,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
         fieldLabel: 'Номер выставленного счета',
         id: 'idinvoicepayment',
         name: 'idinvoicepayment',
-        allowBlank:false,
+        allowBlank:true,
         value: '',
         maxLength: 25,
         minLength: 5
@@ -106,11 +111,12 @@ Ext.define('ExtMVC.view.app.FormSearch', {
         id: 'idCard',
         name: 'idCard',
         allowBlank:false,
-        value: '111111',
+        value: '',
         maxLength: 25,
-        minLength: 5
+        minLength: 5,
+        emptyText:'111111'
       },
-      , {
+       {
         fieldLabel: 'Номер заявки или тикета',
         id: 'idticket',
         name: 'idticket',
@@ -135,29 +141,13 @@ Ext.define('ExtMVC.view.app.FormSearch', {
       ],
 
       buttons: [
-      /*    {
-  text:'run',
-    id: 'runButton',
-  handler:function(){
-     //Ext.getCmp('inputForm').getForm().submit();
-     var form = Ext.getCmp('abon-search-form').getForm();
-     form.url = 'clientsearch/open';
-
-     var el = Ext.getDom(Ext.getCmp('abon-search-form').getEl()); //form.getEl().dom;
-     var target = document.createAttribute("target");
-     target.nodeValue = "_blank";
-     el.setAttributeNode(target);
-     el.action = form.url;
-     el.submit();
-  }},
-*/
       {
         text: 'Найти',
         name: 'button-search',
         type: 'submit',
         handler: function() {
-          var params = component.getForm().getValues();
-          component.fireEvent('search', params);
+          var formValues = cmp.getForm().getValues();
+          cmp.fireEvent('search', formValues);
         }
       }
       /*,{
@@ -166,7 +156,7 @@ Ext.define('ExtMVC.view.app.FormSearch', {
           component.fireEvent('cancel');
         }
       }*/
-    ]
+      ]
     });
 
     this.callParent(arguments);

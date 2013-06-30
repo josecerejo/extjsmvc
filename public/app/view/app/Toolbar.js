@@ -1,65 +1,48 @@
 Ext.define('ExtMVC.view.app.Toolbar', {
   extend: 'Ext.toolbar.Toolbar',
   alias: 'widget.top-toolbar',
+  pageUuid:null,
 
   initComponent: function() {
 
-    var component = this;
+    var cmp = this;
+    cmp.pageUuid = getQueryParam('pageUuid');
 
-   Ext.apply(this, {
-        items:[
-          {
-	                 text:'Поиск',
-                   id: 'btnsearch',
-	                 handler: function(item, ev) {
-                     component.doButtonEvent(item);
-	                 }
-	             },{
-	                 text: 'История',
-	                 id: 'btnhistory',
-                   handler: function(item, ev) {
-                    component.doButtonEvent(item);
-	                 }
-	             },{
-	                 text: 'Заявки',
-                   id: 'btnrequest',
-	                 handler: function(item, ev) {
-                    component.doButtonEvent(item);
-	                 }
-	             },{
-	                 text: 'Отчеты',
-                   id: 'btnreport',
-	                 handler: function(item, ev) {
-                    component.doButtonEvent(item);
-	                 }
-	             },{
-	                 text: 'SMS',
-                   id: 'btnsms',
-	                 handler: function(item, ev) {
-                     component.doButtonEvent(item);
-	                 }
-                },
-                {
-	                 text: 'База КМ',
-                   id: 'btnkm',
-	                 handler: function(item, ev) {
-                     component.doButtonEvent(item);
-	                 }
-                 },
-                 {
-	                 text: 'Справка',
-                   id: 'btnhelp',
-	                 handler: function(item, ev) {
-                     component.doButtonEvent(item);
-	                 }
-	             }
-             ]
-      });
+
+    Ext.apply(this, {
+      defaults:{
+        handler: function(item, ev) {
+          cmp.fireEvent('openMainToolbar', item);
+        }
+      },
+      items:[
+      {
+        text:'Поиск',
+        id: 'Search'
+      },{
+        text: 'История',
+        id: 'History'
+      },{
+        text: 'Заявки',
+        id: 'Request'
+      },{
+        text: 'Отчеты',
+        id: 'Rreport'
+      },{
+        text: 'SMS',
+        id: 'SMS'
+      },
+      {
+        text: 'KM',
+        id: 'KM'
+      },
+      {
+        text: 'Справка',
+        id: 'Help'
+      }
+      ]
+    });
 
     this.callParent(arguments);
-  },
-
-  doButtonEvent:function(item){
-    this.fireEvent('do'+item.id, item);
   }
 });
